@@ -9,22 +9,20 @@
 #endif
 
 char jogo[3][3];
+int flag_elemento = -1; // -1 = x     1 = o
 
 void clear(){
     system(CLEAR);
 }
+void preencher_matriz(int escolha_linha, int escolha_coluna){
 
-void game_loop(){
-
-}
-
-void start_jogo(){
-
-    for(int i = 0; i < 3; i++){
-        for(int j = 0; j < 3; j++){
-            jogo[i][j] = 0; //preenche a matriz do jogo em zeros
-        }
+    if(flag_elemento < 0){
+        jogo[escolha_linha - 1][escolha_coluna - 1] = 'x';
     }
+    else{
+        jogo[escolha_linha - 1][escolha_coluna - 1] = 'o';
+    }
+
 }
 
 void print_jogo(){
@@ -39,7 +37,7 @@ void print_jogo(){
                 printf("   ");
             }
             else{
-                printf(" %d ", jogo[i][j]);
+                printf(" %c ", jogo[i][j]);
             }
             if(j != 2){
                 printf("|");
@@ -52,11 +50,54 @@ void print_jogo(){
     }
 }
 
+void game_loop(){
+
+    while(1){
+
+    int escolha_linha, escolha_coluna;
+
+    print_jogo();
+
+    printf("Escolha a linha (1 - 3): ");
+    scanf("%d", &escolha_linha);
+    while(escolha_linha < 1 || escolha_linha > 3){
+        printf("\nLinha invalida!\n");
+        printf("Escolha a linha (1 - 3): ");
+        scanf("%d", &escolha_linha);
+    }
+    printf("\n");
+
+    printf("Escolha a coluna (1 - 3): ");
+    scanf("%d", &escolha_coluna);
+    while(escolha_coluna < 1 || escolha_coluna > 3){
+        printf("\nColuna invalida!\n");
+        printf("Escolha a coluna (1 - 3): ");
+        scanf("%d", &escolha_coluna);
+    }
+    printf("\n");
+
+    preencher_matriz(escolha_linha, escolha_coluna);
+
+    flag_elemento *= -1;
+    
+
+    }
+}
+
+void start_jogo(){
+
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            jogo[i][j] = 0; //preenche a matriz do jogo em zeros
+        }
+    }
+}
+
 
 int main(){
 
     start_jogo();
-    print_jogo();
+    game_loop();
 
     return 0;
 }
