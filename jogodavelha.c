@@ -8,7 +8,7 @@
   #define CLEAR "clear"
 #endif
 
-char jogo[3][3];
+char jogo[9][9];
 int flag_elemento = -1; // -1 = x     1 = o
 int escolha_linha, escolha_coluna;
 int move_valido = 1;
@@ -66,20 +66,28 @@ void print_jogo(){
 
     printf("\n");
 
-    for(int i = 0; i < 3; i++){
-        for(int j = 0; j < 3; j++){
+    for(int i = 0; i < 9; i++){
+        for(int j = 0; j < 9; j++){
             if(jogo[i][j] == 0){
                 printf("   ");
             }
             else{
                 printf(" %c ", jogo[i][j]);
             }
-            if(j != 2){
+            if(j == 2 || j == 5){
+                printf("  ||  ");
+            }
+            else if(j != 8){
                 printf("|");
             }
+        } 
+
+        if(i == 2 || i == 5 || i == 8){
+            printf("\n_____________________________________________\n‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾");
         }
-        if(i != 2){
-            printf("\n-----------");
+
+        else if(i != 8){
+            printf("\n-----------      -----------      -----------");
         }
         printf("\n");
     }
