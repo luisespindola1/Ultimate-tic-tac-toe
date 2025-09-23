@@ -20,28 +20,43 @@ void clear(){
 
 int check_vitoria(){
     int coluna = 0;
-    for(int i = 0; i < 3; i++){
-        if((jogo[i][coluna] == jogo[i][coluna + 1] && jogo[i][coluna + 1] == jogo[i][coluna + 2]) && jogo[i][coluna] != 0 && jogo[i][coluna + 1] != 0 && jogo[i][coluna + 2] != 0){
-            return 1;
+
+    while(coluna < 9){
+
+        int linha = 0;
+
+        while(linha < 9) {
+
+            for(int i = linha; i < linha + 3; i++){
+                 if((jogo[i][coluna] == jogo[i][coluna + 1] && jogo[i][coluna + 1] == jogo[i][coluna + 2]) && jogo[i][coluna] != 0 && jogo[i][coluna + 1] != 0 && jogo[i][coluna + 2] != 0){
+                return 1;
+            }
+            }
+
+            for(int i = coluna; i < coluna + 3; i++){
+                if((jogo[linha][i] == jogo[linha + 1][i] && jogo[linha + 1][i] == jogo[linha + 2][i]) && jogo[linha][i] != 0 && jogo[linha + 1][i] != 0 && jogo[linha + 2][i] != 0){
+                return 1;
+            }
+            }
+
+            if((jogo[linha][coluna] == jogo[linha + 1][coluna + 1] && jogo[linha + 1][coluna + 1] == jogo[linha + 2][coluna + 2]) && jogo[linha][coluna] != 0 && jogo[linha + 1][coluna + 1] != 0 && jogo[linha + 2][coluna + 2] != 0){
+                return 1;
+            }
+
+            if((jogo[linha][coluna + 2] == jogo[linha + 1][coluna + 1] && jogo[linha + 1][coluna + 1] == jogo[linha + 2][coluna]) && jogo[linha + 1][coluna + 1] != 0 && jogo[linha + 2][coluna] != 0 && jogo[linha][coluna + 2] != 0){
+                return 1;
+            }
+
+            linha += 3;
         }
-    }
 
-    int linha = 0;
-    for(int i = 0; i < 3; i++){
-        if((jogo[linha][i] == jogo[linha + 1][i] && jogo[linha + 1][i] == jogo[linha + 2][i]) && jogo[linha][i] != 0 && jogo[linha + 1][i] != 0 && jogo[linha + 2][i] != 0){
-            return 1;
-        }
+        coluna += 3;
     }
-
-    if((jogo[linha][coluna] == jogo[linha + 1][coluna + 1] && jogo[linha + 1][coluna + 1] == jogo[linha + 2][coluna + 2]) && jogo[linha][coluna] != 0 && jogo[linha + 1][coluna + 1] != 0 && jogo[linha + 2][coluna + 2] != 0){
-        return 1;
-    }
-
-    if((jogo[linha][coluna + 2] == jogo[linha + 1][coluna + 1] && jogo[linha + 1][coluna + 1] == jogo[linha + 2][coluna]) && jogo[linha + 1][coluna + 1] != 0 && jogo[linha + 2][coluna] != 0 && jogo[linha][coluna + 2] != 0){
-        return 1;
-    }
-
     return 0;
+}
+
+void check_vitoria_jogos(){
+
 }
 
 int preencher_matriz(){
@@ -64,10 +79,13 @@ void print_jogo(){
 
     clear();
 
-    printf("\n");
+    printf("\n   1   2   3        4   5   6        7   8   9         \n");
 
     for(int i = 0; i < 9; i++){
+        printf("%d ", i + 1);
+
         for(int j = 0; j < 9; j++){
+
             if(jogo[i][j] == 0){
                 printf("   ");
             }
@@ -75,19 +93,19 @@ void print_jogo(){
                 printf(" %c ", jogo[i][j]);
             }
             if(j == 2 || j == 5){
-                printf("  ||  ");
+                printf("  ┃   ");
             }
             else if(j != 8){
                 printf("|");
             }
         } 
 
-        if(i == 2 || i == 5 || i == 8){
-            printf("\n_____________________________________________\n‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾");
+        if(i == 2 || i == 5){
+            printf("\n  _____________________________________________\n  ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾");
         }
 
         else if(i != 8){
-            printf("\n-----------      -----------      -----------");
+            printf("\n  -----------      -----------      -----------");
         }
         printf("\n");
     }
@@ -97,19 +115,19 @@ void input_jogador(){
 
 
     if(move_valido == 0) printf("\nEsse espaco ja esta preenchido!\n");
-    printf("\nEscolha a linha (1 - 3): ");
+    printf("\nEscolha a linha (1 - 9): ");
     scanf("%d", &escolha_linha);
-    while(escolha_linha < 1 || escolha_linha > 3){
+    while(escolha_linha < 1 || escolha_linha > 9){
         printf("\nLinha invalida!\n");
-        printf("\nEscolha a linha (1 - 3): ");
+        printf("\nEscolha a linha (1 - 9): ");
         scanf("%d", &escolha_linha);
     }
 
-    printf("\nEscolha a coluna (1 - 3): ");
+    printf("\nEscolha a coluna (1 - 9): ");
     scanf("%d", &escolha_coluna);
-    while(escolha_coluna < 1 || escolha_coluna > 3){
+    while(escolha_coluna < 1 || escolha_coluna > 9){
         printf("\nColuna invalida!\n");
-        printf("\nEscolha a coluna (1 - 3): ");
+        printf("\nEscolha a coluna (1 - 9): ");
         scanf("%d", &escolha_coluna);
     }
 
@@ -121,6 +139,7 @@ void game_loop(){
     while(1){
 
     print_jogo();
+    check_vitoria_jogos();
     flag_vitoria = check_vitoria();
     if(flag_vitoria == 1) {
         printf("\nVitoria!\n");
