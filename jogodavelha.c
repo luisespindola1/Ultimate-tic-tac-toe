@@ -20,12 +20,23 @@ void clear(){
     system(CLEAR);
 }
 
+void desenhar_vitoria(int idx, char simbolo) {
+    int linha_inicio = (idx / 3) * 3;
+    int coluna_inicio = (idx % 3) * 3;
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            jogo[linha_inicio + i][coluna_inicio + j] = simbolo;
+        }
+    }
+}
+
+
 void check_vitoria(){
     int linha = 0;
+    int idx = 0;
 
     while(linha < 9){
-
-        int idx = 0;
 
         int coluna = 0;
 
@@ -35,9 +46,11 @@ void check_vitoria(){
                  if((jogo[i][coluna] == jogo[i][coluna + 1] && jogo[i][coluna + 1] == jogo[i][coluna + 2]) && jogo[i][coluna] != 0 && jogo[i][coluna + 1] != 0 && jogo[i][coluna + 2] != 0){
                     if(jogo[i][coluna] == 'o'){
                         flag_jogos[idx] = 1;
+                        desenhar_vitoria(idx, 'o');
                     }
                     else if(jogo[i][coluna] == 'x'){
                         flag_jogos[idx] = -1;
+                        desenhar_vitoria(idx, 'x');
                     }
             }
             }
@@ -46,9 +59,11 @@ void check_vitoria(){
                 if((jogo[linha][i] == jogo[linha + 1][i] && jogo[linha + 1][i] == jogo[linha + 2][i]) && jogo[linha][i] != 0 && jogo[linha + 1][i] != 0 && jogo[linha + 2][i] != 0){
                     if(jogo[linha][i] == 'o'){
                         flag_jogos[idx] = 1;
+                        desenhar_vitoria(idx, 'o');
                     }
                     else if(jogo[linha][i] == 'x'){
                         flag_jogos[idx] = -1;
+                        desenhar_vitoria(idx, 'x');
                     }
             }
             }
@@ -56,18 +71,22 @@ void check_vitoria(){
             if((jogo[linha][coluna] == jogo[linha + 1][coluna + 1] && jogo[linha + 1][coluna + 1] == jogo[linha + 2][coluna + 2]) && jogo[linha][coluna] != 0 && jogo[linha + 1][coluna + 1] != 0 && jogo[linha + 2][coluna + 2] != 0){
                 if(jogo[linha][coluna] == 'o'){
                     flag_jogos[idx] = 1;
+                    desenhar_vitoria(idx, 'o');
                 }
                 else if(jogo[linha][coluna] == 'x'){
                     flag_jogos[idx] = -1;
+                    desenhar_vitoria(idx, 'x');
                 }
             }
 
             if((jogo[linha][coluna + 2] == jogo[linha + 1][coluna + 1] && jogo[linha + 1][coluna + 1] == jogo[linha + 2][coluna]) && jogo[linha + 1][coluna + 1] != 0 && jogo[linha + 2][coluna] != 0 && jogo[linha][coluna + 2] != 0){
                 if(jogo[linha][coluna + 2] == 'o'){
                     flag_jogos[idx] = 1;
+                    desenhar_vitoria(idx, 'o');
                 }
                 else if(jogo[linha][coluna + 2] == 'x'){
                     flag_jogos[idx] = -1;
+                    desenhar_vitoria(idx, 'x');
                 }
             }
 
@@ -110,6 +129,26 @@ int preencher_matriz(){
 
     if(jogo[escolha_linha - 1][escolha_coluna - 1] != 0){
         return 0;
+    }
+
+    int linha = 1;
+    int idx = 0;
+
+    while(linha < 9){
+
+        int coluna = 1;
+
+        while(coluna < 9){
+
+            if(escolha_linha <= linha + 2 && escolha_linha >= linha && escolha_coluna <= coluna + 2 && escolha_coluna >= coluna && flag_jogos[idx] != 0){
+                return 0;
+            }
+
+            coluna += 3;
+        }
+
+        linha += 3;
+        idx++;
     }
 
     if(flag_elemento < 0){
@@ -161,7 +200,7 @@ void print_jogo(){
 void input_jogador(){
 
 
-    if(move_valido == 0) printf("\nEsse espaco ja esta preenchido!\n");
+    if(move_valido == 0) printf("\nEsse espaco nao pode ser preenchido!\n");
     printf("\nEscolha a linha (1 - 9): ");
     scanf("%d", &escolha_linha);
     while(escolha_linha < 1 || escolha_linha > 9){
