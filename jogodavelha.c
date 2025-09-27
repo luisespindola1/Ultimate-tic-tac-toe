@@ -95,6 +95,7 @@ void check_vitoria(){
         }
 
         linha += 3;
+        idx++;
     }
 }
 
@@ -145,6 +146,7 @@ int preencher_matriz(){
             }
 
             coluna += 3;
+            idx++;
         }
 
         linha += 3;
@@ -194,6 +196,15 @@ void print_jogo(){
             printf("\n  -----------      -----------      -----------");
         }
         printf("\n");
+
+    }
+
+    if(flag_elemento == -1){
+        printf("\n\nVez do x!\n");
+    }
+
+    else{
+        printf("\n\nVez do o!\n");
     }
 }
 
